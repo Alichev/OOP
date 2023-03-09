@@ -1,5 +1,5 @@
 package Seminars.Units;
- 
+
 public class Priest extends BaseHero {
 
     private int elixir;
@@ -11,7 +11,7 @@ public class Priest extends BaseHero {
         this.maxElixir = Magician.r.nextInt(50, 150);
         this.elixir = maxElixir;
     }
-    
+
     public String getInfo() {
         return String.format("%s  Elixir: %d", super.getInfo(), this.elixir);
     }

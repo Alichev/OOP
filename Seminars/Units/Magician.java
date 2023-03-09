@@ -1,5 +1,5 @@
 package Seminars.Units;
- 
+
 public class Magician extends BaseHero {
 
     private int mana;
@@ -13,6 +13,6 @@ public class Magician extends BaseHero {
     }
 
     public String getInfo() {
-        return String.format("%s  Mana: %d",super.getInfo(), this.mana);
+        return String.format("%s  Mana: %d", super.getInfo(), this.mana);
     }
 }
