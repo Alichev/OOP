@@ -1,11 +1,11 @@
 package Seminars.Units;
 
-public class InfantryClass extends Unit {
+public abstract class InfantryClass extends Unit {
 
     protected int stamina;
 
-    public InfantryClass(float hp, int speed, int damage, int stamina) {
-        super(hp, speed, damage);
+    public InfantryClass(float hp, int speed, int damage, int stamina, String name) {
+        super(hp, speed, damage, name);
         this.stamina = stamina;
     }
 

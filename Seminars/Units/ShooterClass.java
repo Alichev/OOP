@@ -1,10 +1,10 @@
 package Seminars.Units;
 
-public class ShooterClass extends Unit {
+public abstract class ShooterClass extends Unit {
     protected int arrows;
 
-    public ShooterClass(float hp, int speed, int damage, int arrows) {
-        super(hp, speed, damage);
+    public ShooterClass(float hp, int speed, int damage, int arrows, String name) {
+        super(hp, speed, damage, name);
         this.arrows = arrows;
     }
 
