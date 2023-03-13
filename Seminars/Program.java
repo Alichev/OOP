@@ -7,6 +7,7 @@
 package Seminars;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 import Seminars.Units.Magician;
@@ -25,30 +26,21 @@ public class Program {
         ArrayList<Unit> firstList = new ArrayList<>();
         ArrayList<Unit> secondList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            switch (new Random().nextInt(7)) {
+            switch (new Random().nextInt(4)) {
                 case 0:
                     firstList.add(new Peasant(getName()));
                     break;
                 case 1:
-                    firstList.add(new Pikeman(getName()));
-                    break;
-                case 2:
                     firstList.add(new Outlaw(getName()));
                     break;
-                case 3:
+                case 2:
                     firstList.add(new Magician(getName()));
                     break;
-                case 4:
-                    firstList.add(new Monk(getName()));
-                    break;
-                case 5:
+                default:
                     firstList.add(new Sniper(getName()));
                     break;
-                default:
-                    firstList.add(new Xbowman(getName()));
-                    break;
             }
-            switch (new Random().nextInt(7)) {
+            switch (new Random().nextInt(4)) {
                 case 0:
                     secondList.add(new Peasant(getName()));
                     break;
@@ -56,16 +48,7 @@ public class Program {
                     secondList.add(new Pikeman(getName()));
                     break;
                 case 2:
-                    secondList.add(new Outlaw(getName()));
-                    break;
-                case 3:
-                    secondList.add(new Magician(getName()));
-                    break;
-                case 4:
                     secondList.add(new Monk(getName()));
-                    break;
-                case 5:
-                    secondList.add(new Sniper(getName()));
                     break;
                 default:
                     secondList.add(new Xbowman(getName()));
@@ -73,22 +56,37 @@ public class Program {
             }
         }
 
-        // firstList.forEach(u -> u.getNAME());
-        // secondList.forEach(u -> u.getNAME());
-        System.out.println("Первая команда:");
-        for (Unit u : firstList) {
-            System.out.printf("%s по имени ", u.getInfo());
-            u.getNAME();
+        ArrayList<Unit> commonList = listMerge(firstList, secondList);
+
+        commonList.sort(new Comparator<Unit>() {
+            @Override
+            public int compare(Unit u1, Unit u2) {
+                if (u1.getSpeed() == u2.getSpeed())
+                    return 0;
+                else if (u1.getSpeed() > u2.getSpeed())
+                    return 1;
+                else
+                    return -1;
+            }
+        });
+
+        for (Unit u : commonList) {
+            System.out.printf(u.getInfo());
+            System.out.println("");
         }
-        System.out.println("\nВторая команда:");
-        for (Unit u : secondList) {
-            System.out.printf("%s по имени ", u.getInfo());
-            u.getNAME();
-        }
+
+        firstList.forEach(u -> u.step(firstList, secondList));
 
     }
 
     private static String getName() {
         return Names.values()[new Random().nextInt(Names.values().length)].toString();
+    }
+
+    public static ArrayList<Unit> listMerge(ArrayList<Unit> list1, ArrayList<Unit> list2) {
+        ArrayList<Unit> list = new ArrayList<>();
+        list.addAll(list1);
+        list.addAll(list2);
+        return list;
     }
 }

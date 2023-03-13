@@ -3,12 +3,6 @@ package Seminars.Units;
 public class Pikeman extends InfantryClass {
 
     public Pikeman(String name) {
-        super(40, 4, 4, 10, name);
+        super("копейщик", 10, 4, 4, 5, 2, name);
     }
-
-    @Override
-    public String getInfo() {
-        return String.format("копейщик");
-    }
-
 }
