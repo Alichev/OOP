@@ -1,14 +1,23 @@
 package Seminars.Units;
 
 public class Position {
-    public int x, y;
+    protected int x, y;
 
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public double getDistance(Unit unit) {
-        return Math.sqrt(Math.pow(x - unit.position.x, 2) + Math.pow(y - unit.position.y, 2));
+    public boolean isEquals(Position opposite) {
+        if (opposite.y == y && opposite.x == x) {
+            return true;
+        }
+        return false;
+    }
+
+    public float getDistance(float x, float y) {
+        float dx = x - this.x;
+        float dy = y - this.y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
     }
 }

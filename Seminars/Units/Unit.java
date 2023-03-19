@@ -7,37 +7,39 @@ public abstract class Unit implements UnitInterface {
     protected Random rnd = new Random();
 
     protected final String character;
-    protected float hp;
-    protected int speed;
+    public float hp;
+    public float maxHp;
+    public int speed;
     protected int attack;
     protected int protection;
     protected int damage;
     protected int maxDamage;
     protected final String NAME;
-    protected String state;
+    protected int UNIT;
     public Position position;
 
-    public Unit(String character, float hp, int speed, int attack, int protection, int damage, int maxDamage,
+    public Unit(String character, float hp, int speed, int attack, int protection, int damage,
+            int maxDamage, int UNIT,
             int x, int y, String name) {
         this.character = character;
         this.hp = hp;
+        this.maxHp = hp;
         this.speed = speed;
         this.attack = attack;
         this.protection = protection;
         this.damage = damage;
         this.maxDamage = maxDamage;
+        this.UNIT = UNIT;
         NAME = name;
-        state = "Stand";
-        position = new Position(x, y);
+        this.position = new Position(x, y);
     }
 
     public String getNAME() {
-        // System.out.println(NAME);
         return NAME;
     }
 
     @Override
-    public void step(ArrayList<Unit> team, ArrayList<Unit> friends) {
+    public void step(ArrayList<Unit> heroList) {
         System.out.println("ЗАГЛУШКА");
     }
 
@@ -62,30 +64,37 @@ public abstract class Unit implements UnitInterface {
             this.hp = 0;
     }
 
-    public void attack(Unit target, int damage, int maxDamage) {
-        int causedDamage;
-        if (damage < target.protection)
-            causedDamage = damage;
-        else {
-            switch (new Random().nextInt(4)) {
-                case 0:
-                    causedDamage = maxDamage;
-                    break;
-                default:
-                    causedDamage = damage;
-                    break;
-            }
-        }
-        System.out.printf("%s %s атакует %s %s\t", this.getCharacter(), this.getNAME(), target.getCharacter(),
-                target.getNAME());
-        System.out.printf("Нанесенный урон = %d\n", causedDamage);
-        target.getDamage(causedDamage);
-        System.out.printf("%s (здоровье) = %.2f\n", target.getCharacter(), target.hp);
-    }
+    // public void attack(Unit target, int damage, int maxDamage) {
+    // int causedDamage;
+    // if (damage < target.protection)
+    // causedDamage = damage;
+    // else {
+    // switch (new Random().nextInt(4)) {
+    // case 0:
+    // causedDamage = maxDamage;
+    // break;
+    // default:
+    // causedDamage = damage;
+    // break;
+    // }
+    // }
+    // System.out.printf("%s %s атакует %s %s\t", this.getCharacter(),
+    // this.getNAME(), target.getCharacter(),
+    // target.getNAME());
+    // System.out.printf("Нанесенный урон = %d\n", causedDamage);
+    // target.getDamage(causedDamage);
+    // System.out.printf("%s (здоровье) = %.2f\n", target.getCharacter(),
+    // target.hp);
+    // }
 
     @Override
     public String toString() {
         return character;
+    }
+
+    @Override
+    public Position getPosition() {
+        return this.position;
     }
 
 }
