@@ -1,5 +1,7 @@
 package Seminars.Units;
 
+import java.util.ArrayList;
+
 public class Position {
     protected int x, y;
 
@@ -8,16 +10,48 @@ public class Position {
         this.y = y;
     }
 
-    public boolean isEquals(Position opposite) {
-        if (opposite.y == y && opposite.x == x) {
-            return true;
-        }
-        return false;
+    public double getDistance(Unit unit) {
+
+        return Math.sqrt(Math.pow(x - unit.position.x, 2) + Math.pow(y - unit.position.y, 2));
+
     }
 
-    public float getDistance(float x, float y) {
-        float dx = x - this.x;
-        float dy = y - this.y;
-        return (float) Math.sqrt(dx * dx + dy * dy);
+    public boolean isEquals(Position position) {
+        if ((position.x == this.x) & (position.y == this.y))
+            return true;
+        else
+            return false;
+    }
+
+    public void direction(Position position, ArrayList<Unit> friends) {
+        boolean[] temp = checkPos(friends);
+        float dx = Math.abs(this.x - position.x);
+        float dy = Math.abs(this.y - position.y);
+        if (dx > dy) {
+            if (this.x < position.x & temp[1])
+                this.x += 1;
+            else if (x > 1)
+                this.x -= 1;
+        } else {
+            if (this.y < position.y)
+                this.y += 1;
+            else if (y > 1)
+                this.y -= 1;
+        }
+    }
+
+    public boolean[] checkPos(ArrayList<Unit> friends) {
+        boolean[] temp = new boolean[4];
+        for (Unit u : friends) {
+            if ((u.position.x == this.x + 1) & (u.position.y == this.y))
+                temp[0] = true;
+            if ((u.position.x == this.x - 1) & (u.position.y == this.y))
+                temp[1] = true;
+            if ((u.position.x == this.x) & (u.position.y == this.y + 1))
+                temp[2] = true;
+            if ((u.position.x == this.x) & (u.position.y == this.y - 1))
+                temp[3] = true;
+        }
+        return temp;
     }
 }

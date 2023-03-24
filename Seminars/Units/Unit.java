@@ -4,53 +4,39 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Unit implements UnitInterface {
-    protected Random rnd = new Random();
+    protected static Random r = new Random();
 
-    protected final String character;
-    public float hp;
-    public float maxHp;
-    public int speed;
-    protected int attack;
-    protected int protection;
+    public int hp;
+    protected int maxHp;
+    protected int speed;
     protected int damage;
     protected int maxDamage;
+    protected int armor;
     protected final String NAME;
-    protected int UNIT;
-    public Position position;
+    protected Position position;
 
-    public Unit(String character, float hp, int speed, int attack, int protection, int damage,
-            int maxDamage, int UNIT,
-            int x, int y, String name) {
-        this.character = character;
+    public Unit(int hp, int speed, int damage, int maxDamage, int armor, String name, int x, int y) {
         this.hp = hp;
         this.maxHp = hp;
         this.speed = speed;
-        this.attack = attack;
-        this.protection = protection;
         this.damage = damage;
         this.maxDamage = maxDamage;
-        this.UNIT = UNIT;
+        this.armor = armor;
         NAME = name;
-        this.position = new Position(x, y);
-    }
-
-    public String getNAME() {
-        return NAME;
+        position = new Position(x, y);
     }
 
     @Override
-    public void step(ArrayList<Unit> heroList) {
-        System.out.println("ЗАГЛУШКА");
+    public void step(ArrayList<Unit> team, ArrayList<Unit> friends) {
     }
 
     @Override
     public String getInfo() {
-        return "";
+        return String.format("%s %s - HP: %d, БРОНЯ: %d", getName(), NAME, hp, armor);
     }
 
-    @Override
-    public String getCharacter() {
-        return this.character;
+    public String getName() {
+        return "base";
     }
 
     public int getSpeed() {
@@ -64,37 +50,29 @@ public abstract class Unit implements UnitInterface {
             this.hp = 0;
     }
 
-    // public void attack(Unit target, int damage, int maxDamage) {
-    // int causedDamage;
-    // if (damage < target.protection)
-    // causedDamage = damage;
-    // else {
-    // switch (new Random().nextInt(4)) {
-    // case 0:
-    // causedDamage = maxDamage;
-    // break;
-    // default:
-    // causedDamage = damage;
-    // break;
-    // }
-    // }
-    // System.out.printf("%s %s атакует %s %s\t", this.getCharacter(),
-    // this.getNAME(), target.getCharacter(),
-    // target.getNAME());
-    // System.out.printf("Нанесенный урон = %d\n", causedDamage);
-    // target.getDamage(causedDamage);
-    // System.out.printf("%s (здоровье) = %.2f\n", target.getCharacter(),
-    // target.hp);
-    // }
-
-    @Override
-    public String toString() {
-        return character;
+    public void attack(Unit target, int damage, int maxDamage) {
+        int causedDamage;
+        if (damage < target.armor)
+            causedDamage = damage;
+        else {
+            switch (new Random().nextInt(4)) {
+                case 0:
+                    causedDamage = maxDamage;
+                    break;
+                default:
+                    causedDamage = damage;
+                    break;
+            }
+        }
+        target.getDamage(causedDamage);
     }
 
-    @Override
+    public static String generateName() {
+        return Names.values()[new Random().nextInt(Names.values().length)].toString();
+    }
+
     public Position getPosition() {
-        return this.position;
+        return position;
     }
 
 }
